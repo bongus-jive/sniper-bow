@@ -4,5 +4,5 @@
 		{ "item" : "hunterrifle", "count" : 1 }
   ],
   "output" : { "item" : "pat_sniperbow", "count" : 1 },
-  "groups" : [ "plain", "all" ]
+  "groups" : [ "craftinganvil2", "weapons", "all" ]
 }
