@@ -1,10 +1,11 @@
 {
-  "version" : "v2.1",
-  "tags" : "Miscellaneous|Weapons",
   "author" : "pat man",
-  "description" : "adds sniper bow\nprimary makes the gun shoot bullet\nalt makes the bow shoot gun which shoots bullet\n\nmake at tier 2 anvil\n\n[img]https://i.imgur.com/wXjYMqP.gif[/img]https://discord.gg/GdsQSgV\n[img]https://i.imgur.com/uyG8oTa.gif[/img]https://www.patreon.com/pathiccstar",
-  "name" : "pat_sniperbow",
+  "description" : "adds sniper bow\nprimary makes the gun shoot bullet\nalt makes the bow shoot gun which shoots bullet\nmake at tier 2 anvil\n\nhttps://github.com/bongus-jive/sniper-bow\nhttps://discord.gg/GdsQSgV",
   "friendlyName" : "Sniper Bow",
+  "link" : "steam://url/CommunityFilePage/1444754100",
+  "name" : "pat_sniperbow",
   "steamContentId" : "1444754100",
-  "link" : "steam://url/CommunityFilePage/1444754100"
+  "steamDescription" : "adds sniper bow\nprimary makes the gun shoot bullet\nalt makes the bow shoot gun which shoots bullet\n\nmake at tier 2 anvil\n\n[img]https://i.imgur.com/jJAj6jF.gif[/img] https://github.com/bongus-jive/sniper-bow\n[img]https://i.imgur.com/wXjYMqP.gif[/img] https://discord.gg/GdsQSgV\n[img]https://i.imgur.com/uyG8oTa.gif[/img] https://www.patreon.com/pathiccstar\n[img]https://i.imgur.com/xVfcRRH.gif[/img] https://ko-fi.com/patmanf",
+  "tags" : "Miscellaneous|Weapons",
+  "version" : "v2.1"
 }
