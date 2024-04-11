@@ -1,0 +1,76 @@
+{
+  "animatedParts" : {
+		"stateTypes" : {
+			"muzzleFlash" : {
+				"default" : "off",
+				"states" : {
+					"off" : { "properties" : { "lightsOff" : ["muzzleFlash"] } },
+					"fire" : {
+						"frames" : 2,
+						"cycle" : 0.045,
+						"mode" : "transition",
+						"transition" : "off",
+						"properties" : { "lightsOn" : ["muzzleFlash"] }
+					}
+				}
+			}
+		},
+		
+    "parts" : {
+      "bow" : {
+        "properties" : {
+					"offset" : [0.9375, 0],
+          "centered" : true,
+          "image" : "<partImage>:<drawFrame>",
+          "transformationGroups" : ["weapon"]
+        }
+      },
+			
+			"muzzleFlash" : {
+				"properties" : {
+					"zLevel" : -1,
+					"centered" : true,
+					"offset" : [4, 0],
+					"fullbright" : true,
+					"transformationGroups" : ["weapon"]
+				},
+				"partStates" : {
+					"muzzleFlash" : { "fire" : { "properties" : { "image" : "<partImage>:<variant>.<frame>" } } }
+				}
+			}
+    }
+  },
+
+  "transformationGroups" : {
+    "weapon" : {}
+  },
+
+  "sounds" : {
+		"draw" : [ "/sfx/gun/bow_draw1.ogg", "/sfx/gun/bow_draw2.ogg", "/sfx/gun/bow_draw3.ogg" ],
+		"release" : [ "/sfx/gun/bow_loose.ogg" ],
+		"perfectRelease" : [ "/sfx/gun/bow_loose.ogg" ],
+		"fire" : {
+			"pool" : [ "/sfx/gun/sniper2.ogg" ],
+			"volume" : 0.75
+		}
+  },
+
+  "particleEmitters" : {
+    "muzzleFlash" : {
+      "transformationGroups" : ["weapon"],
+      "offsetRegion" : [3, 0, 3, 0],
+			"burstCount" : 2,
+      "particles" : [
+				{ "particle" : "rocketbarrelpuff" }
+			]
+    }
+  },
+	
+	"lights" : {
+		"muzzleFlash" : {
+			"active" : false,
+			"position" : [0, 0],
+			"color" : [90, 90, 0]
+		}
+	}
+}

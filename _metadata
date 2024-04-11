@@ -1,10 +1,10 @@
 {
-  "version" : "v1.0",
-  "author" : "yes patman",
+  "version" : "v2.0",
   "tags" : "Miscellaneous|Weapons",
-  "description" : "adds a bow but its actually a gun that shoots bullets\nalt ability shoots bullets that explode into more bullets and arrows haha\ncraft with hands yes\n\n[url=https://discord.gg/Vaqm6yS]join the discord or i will shoot you with the bow yes[/url]",
-  "name" : "sniperbow",
-  "friendlyName" : "haha sniper bow",
+  "author" : "pat man",
+  "description" : "adds sniper bow\nprimary makes the gun shoot bullet\nalt makes the bow shoot gun which shoots bullet\n\nmake at hand\n\n[img]https://i.imgur.com/wXjYMqP.gif[/img]https://discord.gg/GdsQSgV\n[img]https://i.imgur.com/uyG8oTa.gif[/img]https://www.patreon.com/pathiccstar",
+  "name" : "pat_sniperbow",
+  "friendlyName" : "Sniper Bow",
   "steamContentId" : "1444754100",
   "link" : "steam://url/CommunityFilePage/1444754100"
 }

@@ -1,0 +1,62 @@
+{
+  "itemName" : "pat_sniperbow",
+  "price" : 690,
+  "inventoryIcon" : "icon.png",
+  "maxStack" : 1,
+  "rarity" : "Legendary",
+  "tooltipKind" : "bow",
+  "category" : "bow",
+  "description" : "gaming",
+  "shortdescription" : "Sniper Bow",
+  "twoHanded" : true,
+  "itemTags" : ["weapon", "ranged", "bow"],
+
+  "radioMessagesOnPickup" : [ "pickupbow" ],
+
+  "level" : 6,
+
+  "animation" : "sniperbow.animation",
+  "animationParts" : {
+    "bow" : "bow.png",
+		"muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png"
+  },
+  "animationCustom" : {},
+
+  "scripts" : ["/items/active/weapons/bow/bow.lua"],
+
+  "primaryAbilityType" : "bowshot",
+  "primaryAbility" : {
+		"scripts" : ["/pat/sniperbow/sniperbow.lua"],
+		"class" : "SniperBowShot",
+		
+    "fireOffset" : [3.0, 0],
+		"inaccuracy" : 0,
+    "drawPowerMultiplier" : "drawTimeMultiplier",
+    "drawSpeedMultiplier" : "constant",
+    "drawArmFrames" : ["rotation", "swim.2?crop=0;0;40;43", "swim.2", "swimIdle.1?crop=0;0;41;43", "swimIdle.1"],
+    "projectileType" : "standardbullet",
+    "powerProjectileType" : "piercingbullet",
+    "projectileParameters" : {
+			"speed" : 200,
+      "power" : 9,
+			"knockback" : 15
+    }
+  },
+  
+  "altAbilityType" : "bowshot",
+  "altAbility" : {
+		"scripts" : ["/pat/sniperbow/alt.lua"],
+    "name" : "shoot gun",
+    "drawPowerMultiplier" : "constant",
+    "drawSpeedMultiplier" : "drawTimeMultiplier",
+    "drawArmFrames" : ["rotation", "swim.2?crop=0;0;40;43", "swim.2", "swimIdle.1?crop=0;0;41;43", "swimIdle.1"],
+    "projectileType" : "pat_sniperbow",
+    "powerProjectileTime" : [0, 0],
+    "projectileParameters" : {
+      "power" : 4.5,
+      "speed" : 75
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildbow.lua"
+}
