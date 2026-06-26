@@ -19,7 +19,7 @@
 		}
 	],
 	
-	"scripts" : ["/pat/throwinggun/gun.lua"],
+	"scripts" : ["/pat/sniperbow/projectiles/sniper.lua"],
 	"config" : {
 		"rotationSpeed" : 5,
 		
