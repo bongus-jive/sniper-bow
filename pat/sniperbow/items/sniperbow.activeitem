@@ -1,19 +1,17 @@
 {
   "itemName": "pat_sniperbow",
-  "price": 690,
+  "shortdescription": "Sniper Bow",
+  "description": "",
+  "rarity": "Legendary",
+  "category": "bow",
+  "tooltipKind": "bow",
   "inventoryIcon": "images/icon.png",
   "maxStack": 1,
-  "rarity": "Legendary",
-  "tooltipKind": "bow",
-  "category": "bow",
-  "description": "gaming",
-  "shortdescription": "Sniper Bow",
+  "price": 690,
+  "level": 6,
   "twoHanded": true,
   "itemTags": [ "weapon", "ranged", "bow" ],
-
   "radioMessagesOnPickup": [ "pickupbow" ],
-
-  "level": 6,
 
   "animation": "sniperbow.animation",
   "animationParts": {
@@ -26,7 +24,7 @@
 
   "primaryAbilityType": "bowshot",
   "primaryAbility": {
-    "scripts": [ "/pat/sniperbow/items/sniperbow.lua" ],
+    "scripts": [ "/pat/sniperbow/items/sniperbowshot.lua" ],
     "class": "SniperBowShot",
 
     "fireOffset": [ 3.0, 0 ],
@@ -34,6 +32,7 @@
     "drawPowerMultiplier": "drawTimeMultiplier",
     "drawSpeedMultiplier": "constant",
     "drawArmFrames": [ "rotation", "swim.2?crop=0;0;40;43", "swim.2", "swimIdle.1?crop=0;0;41;43", "swimIdle.1" ],
+
     "projectileType": "standardbullet",
     "powerProjectileType": "piercingbullet",
     "projectileParameters": {
@@ -45,16 +44,29 @@
 
   "altAbilityType": "bowshot",
   "altAbility": {
-    "scripts": [ "/pat/sniperbow/items/alt.lua" ],
-    "name": "shoot gun",
+    "scripts": [ "/pat/sniperbow/items/sniperbowshot.lua" ],
+    "class": "SniperBowShot",
+
+    "energyPerShot": 45,
     "drawPowerMultiplier": "constant",
     "drawSpeedMultiplier": "drawTimeMultiplier",
     "drawArmFrames": [ "rotation", "swim.2?crop=0;0;40;43", "swim.2", "swimIdle.1?crop=0;0;41;43", "swimIdle.1" ],
+    "doMuzzleflash": false,
+
     "projectileType": "pat_sniperbow",
-    "powerProjectileTime": [ 0, 0 ],
+    "powerProjectileType": "pat_sniperbow",
     "projectileParameters": {
-      "power": 4.5,
+      "power": 5,
       "speed": 75
+    },
+    "powerProjectileParameters": {
+      "thrownGunParameters": {
+        "projectileType": "piercingbullet"
+      }
+    },
+    "flipParameters": {
+      "gunFlipped": true,
+      "processing": "?flipy"
     }
   },
 

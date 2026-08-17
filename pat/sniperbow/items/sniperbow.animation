@@ -7,7 +7,7 @@
 					"off": { "properties": { "lightsOff": [ "muzzleFlash" ] } },
 					"fire": {
 						"frames": 2,
-						"cycle": 0.045,
+						"cycle": 0.06,
 						"mode": "transition",
 						"transition": "off",
 						"properties": { "lightsOn": [ "muzzleFlash" ] }
@@ -49,19 +49,17 @@
 		"draw": [ "/sfx/gun/bow_draw1.ogg", "/sfx/gun/bow_draw2.ogg", "/sfx/gun/bow_draw3.ogg" ],
 		"release": [ "/sfx/gun/bow_loose.ogg" ],
 		"perfectRelease": [ "/sfx/gun/bow_loose.ogg" ],
-		"fire": {
-			"pool": [ "/sfx/gun/sniper2.ogg" ],
-			"volume": 0.75
-		}
+		"fire": [ "/sfx/gun/sniper2.ogg" ],
+		"fire2": [ "/sfx/gun/sniper3.ogg" ]
 	},
 
 	"particleEmitters": {
 		"muzzleFlash": {
 			"transformationGroups": [ "weapon" ],
-			"offsetRegion": [ 3, 0, 3, 0 ],
-			"burstCount": 2,
+			"offsetRegion": [ 3.5, -0.1, 3.6, 0.1 ],
 			"particles": [
-				{ "particle": "rocketbarrelpuff" }
+				{ "particle": "rocketbarrelpuff", "count": 3 },
+				{ "particle": "pat_sniperbow_case" }
 			]
 		}
 	},
