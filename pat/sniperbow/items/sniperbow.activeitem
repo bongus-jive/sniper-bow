@@ -38,7 +38,8 @@
     "projectileParameters": {
       "speed": 200,
       "power": 9,
-      "knockback": 15
+      "knockback": 15,
+      "damageKind": "bow"
     }
   },
 
