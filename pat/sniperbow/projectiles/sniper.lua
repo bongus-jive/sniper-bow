@@ -26,6 +26,9 @@ function update(dt)
 end
 
 function bounce()
+	if shots == 0 then return end
+	if shots > 0 then shots = shots - 1 end
+	
 	--targets
 	local mpos = mcontroller.position()
 	local ents = world.entityQuery(mpos, 100, {withoutEntityId = sourceId, order = "nearest", includedTypes = {"creature"}})
