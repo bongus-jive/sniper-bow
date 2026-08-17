@@ -3,14 +3,15 @@
 	"image": "sniper.png",
 	"timeToLive": 15,
 	"orientationLocked": true,
-	"bounces": 5,
+	"bounces": -1,
 	"piercing": true,
 	"damageKind": "foldingchair",
+	"damagePoly": [ [ 10, 3 ], [ -10, 3 ], [ -10, -3 ], [ 10, -3 ] ],
 	"movementSettings": {
-		"mass": 1,
-		"gravityMultiplier": 1.6,
-		"bounceFactor": 0.55,
-		"stopOnFirstBounce": true
+		"gravityMultiplier": 1.5,
+		"bounceFactor": 0.6,
+		"stopOnFirstBounce": true,
+		"collisionPoly": [ [ -0.375, -0.375 ], [ 0.375, -0.375 ], [ 0.375, 0.375 ], [ -0.375, 0.375 ] ]
 	},
 	"actionOnCollide": [
 		{
@@ -20,37 +21,21 @@
 	],
 
 	"scripts": [ "/pat/sniperbow/projectiles/sniper.lua" ],
-	"config": {
-		"rotationSpeed": 5,
+	"thrownGunConfig": {
+		"rotationRate": 5,
+		"rotationDeviation": 2,
 
-		"entityBounces": 2,
-		"entityBounceFactor": 0.5,
+		"emptyTimeToLive": 0.5,
+		"emptyBounces": 6,
 
-		"shots": 1,
-		"inaccuracy": 0,
-		"inheritDamageFactor": 2,
-		"projectileCount": 1,
+		"hitBounceFactor": 0.6,
+		"recoil": 40,
+
 		"projectileType": "standardbullet",
-		"projectileParameters": {
-			"speed": 200
-		},
+		"projectileDamageFactor": 2,
+		"projectileParameters": { "speed": 200 },
 
 		"muzzleOffset": [ 3, 0 ],
-		"muzzleflash": "pat_sniperbow_muzzleflash",
-		"muzzleflashVariants": 3,
-		"muzzleflashActions": [
-			{
-				"action": "sound",
-				"options": [ "/sfx/gun/sniper2.ogg" ]
-			},
-			{
-				"action": "loop",
-				"count": 2,
-				"body": [ {
-						"action": "particle",
-						"specification": "rocketbarrelpuff"
-					} ]
-			}
-		]
+		"muzzleflash": "pat_sniperbow_muzzleflash"
 	}
 }

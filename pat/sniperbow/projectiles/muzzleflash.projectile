@@ -1,19 +1,66 @@
 {
-	"projectileName": "pat_sniperbow_muzzleflash",
-	"image": "muzzleflash.png",
-	"processing": ".1",
-	"frameNumber": 3,
-	"animationLoops": false,
-	"animationCycle": 0.04,
-	"timeToLive": 0.12,
-	"flippable": true,
-	"fullbright": true,
-	"pointLight": true,
-	"lightColor": [ 90, 90, 0 ],
-	"speed": 0,
-	"onlyHitTerrain": true,
-	"damageType": "NoDamage",
-	"movementSettings": {
-		"collisionEnabled": false
-	}
+  "projectileName": "pat_sniperbow_muzzleflash",
+  "image": "invisible.png",
+  "timeToLive": 0.1,
+  "onlyHitTerrain": true,
+  "damageType": "NoDamage",
+  "movementSettings": {
+    "collisionEnabled": false,
+    "frictionEnabled": false,
+    "gravityEnabled": false,
+    "speedLimit": 0,
+    "physicsEffectCategories": [ ]
+  },
+  "periodicActions": [
+    {
+      "action": "actions",
+      "time": 0,
+      "repeat": false,
+      "list": [
+        { "action": "sound", "options": [ "/sfx/gun/sniper2.ogg" ] },
+        { "action": "sound", "options": [ "/sfx/gun/sniper3.ogg" ] },
+        {
+          "action": "loop",
+          "count": 3,
+          "body": [ { "action": "particle", "specification": "rocketbarrelpuff" } ]
+        },
+        {
+          "action": "particle",
+          "rotate": true,
+          "specification": {
+            "type": "animated",
+            "animation": "/pat/sniperbow/particles/muzzleflash.animation",
+            "layer": "front",
+            "light": [ 180, 120, 0 ],
+            "fade": 11,
+            "timeToLive": 1,
+            "fullbright": true,
+            "collidesForeground": false
+          }
+        },
+        {
+          "action": "particle",
+          "rotate": true,
+          "specification": {
+            "type": "textured",
+            "image": "/pat/sniperbow/particles/case.png",
+            "timeToLive": 1.5,
+            "layer": "middle",
+            "rotate": true,
+            "collidesForeground": true,
+            "destructionTime": 0.5,
+            "destructionAction": "shrink",
+            "position": [ -3.25, 0 ],
+            "initialVelocity": [ 5, 12 ],
+            "finalVelocity": [ 0, -100 ],
+            "approach": [ 0, 45 ],
+            "variance": {
+              "angularVelocity": 360,
+              "initialVelocity": [ 8, 4 ]
+            }
+          }
+        }
+      ]
+    }
+  ]
 }

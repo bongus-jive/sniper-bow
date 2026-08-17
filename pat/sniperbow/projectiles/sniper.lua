@@ -2,102 +2,128 @@ require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 
 function init()
-	sourceId = projectile.sourceEntity()
-	cfg = config.getParameter("config")
-	
-	shots = cfg.shots or 1
-	rotationSpeed = cfg.rotationSpeed or 1
-  entityBounces = cfg.entityBounces or 0
-  entityBounceFactor = (cfg.entityBounceFactor or 1) * -1
+  local cfg = config.getParameter("thrownGunConfig")
+
+  self.sourceId = projectile.sourceEntity() or entity.id()
+
+  self.ammo = cfg.ammo or 1
+  self.recoil = cfg.recoil
+  self.hitBounceFactor = -(cfg.hitBounceFactor or 1)
+  self.rotationRate = sb.nrand(cfg.rotationDeviation or 0, cfg.rotationRate or 1)
+
+  self.emptyTimer = 0
+  self.emptyTimeToLive = cfg.emptyTimeToLive or 0
+  self.emptyBounces = cfg.emptyBounces or -1
+
+  self.targetQueryRange = cfg.targetQueryRange or 100
+  self.targetQueryOptions = sb.jsonMerge({
+    order = "nearest",
+    includedTypes = { "creature" },
+    withoutEntityId = self.sourceId
+  }, cfg.targetQueryOptions)
+  
+  self.muzzleOffset = cfg.muzzleOffset or {0, 0}
+  self.projectileType = cfg.projectileType
+  self.projectileDamageFactor = cfg.projectileDamageFactor or 1
+  self.projectileParameters = sb.jsonMerge({ powerMultiplier = projectile.powerMultiplier() }, cfg.projectileParameters)
+
+  self.muzzleflashType = cfg.muzzleflash
+  self.muzzleflashParameters = cfg.muzzleflashParameters
+
+  if config.getParameter("gunFlipped", false) then
+    self.muzzleOffset[2] = -self.muzzleOffset[2]
+  end
 end
 
 function update(dt)
-	local vel = mcontroller.velocity()
-	local dir = vel[1] > 0 and 1 or -1
-	local rotation = (vec2.mag(vel) / 180 * math.pi) * -dir * dt * rotationSpeed
-  mcontroller.setRotation(mcontroller.rotation() + rotation)
-	
-	if cfg.muzzleflashActions then
-		for _,action in ipairs(cfg.muzzleflashActions) do
-			action.time = action.time or 0
-			action["repeat"] = action["repeat"] or false
-		end
-	end
+  self.hasHitBounced = false
+  
+  if self.ammo <= 0 then
+    self.emptyTimer = self.emptyTimer + dt
+  elseif self.emptyTimer ~= 0 then
+    self.emptyTimer = 0
+  end
+
+  local vel = mcontroller.velocity()
+  local dir = vel[1] > 0 and -1 or 1
+  local rot = math.rad(vec2.mag(vel)) * self.rotationRate * dir * dt
+  mcontroller.setRotation(mcontroller.rotation() + rot)
+end
+
+function fireProjectile()
+  if self.ammo <= 0 then return end
+  self.ammo = self.ammo - 1
+
+  snapToTarget()
+
+  local aimAngle = mcontroller.rotation()
+  local aimVector = {math.cos(aimAngle), math.sin(aimAngle)}
+  local firePos, muzzlePos = firePosition(aimAngle)
+
+  self.projectileParameters.power = projectile.power() * self.projectileDamageFactor
+
+  world.spawnProjectile(self.projectileType, firePos, self.sourceId, aimVector, nil, self.projectileParameters)
+  world.spawnProjectile(self.muzzleflashType, muzzlePos, self.sourceId, aimVector, nil, self.muzzleflashParameters)
+  
+  if self.recoil then
+    local recoil = vec2.mul(aimVector, -self.recoil)
+    mcontroller.addMomentum(recoil)
+  end
+end
+
+function firePosition(angle)
+  local pos = mcontroller.position()
+  local muzzlePos = vec2.add(pos, vec2.rotate(self.muzzleOffset, angle))
+  local firePos = world.lineCollision(pos, muzzlePos) or muzzlePos
+  return firePos, muzzlePos
+end
+
+function snapToTarget()
+  if self.targetQueryRange <= 0 then return end
+  
+  local targets = world.entityQuery(mcontroller.position(), self.targetQueryRange, self.targetQueryOptions)
+  for _, id in ipairs(targets) do
+    if entity.entityInSight(id) and world.entityCanDamage(entity.id(), id) then
+      local angle = vec2.angle(entity.distanceToEntity(id))
+      mcontroller.setRotation(angle)
+      break
+    end
+  end
+end
+
+function hit(id)
+  if self.hasHitBounced then return end
+  self.hasHitBounced = true
+
+  local vel = mcontroller.velocity()
+  local pos = vec2.sub(mcontroller.position(), vec2.norm(vel))
+  local diff = world.distance(world.entityPosition(id), pos)
+
+  local norm = vec2.norm({diff[2], -diff[1]})
+  local dot = vec2.dot(vel, norm) * 2
+  
+  mcontroller.setVelocity({
+    (vel[1] - dot * norm[1]) * self.hitBounceFactor,
+    (vel[2] - dot * norm[2]) * self.hitBounceFactor
+  })
 end
 
 function bounce()
-	if shots == 0 then return end
-	if shots > 0 then shots = shots - 1 end
-	
-	--targets
-	local mpos = mcontroller.position()
-	local ents = world.entityQuery(mpos, 100, {withoutEntityId = sourceId, order = "nearest", includedTypes = {"creature"}})
-	local target, tpos
-	for _,id in ipairs(ents) do
-		local epos = world.entityPosition(id)
-		if world.entityCanDamage(sourceId, id) and not world.lineTileCollision(mpos, epos) then
-			target = id
-			tpos = epos
-			break
-		end
-	end
-	if target then
-		local angle = vec2.angle(world.distance(tpos, mpos))
-		mcontroller.setRotation(angle)
-		mpos = mcontroller.position()
-	end
-	
-	--projectile
-	local mrot = mcontroller.rotation()
-	local firePos = vec2.add(mpos, vec2.rotate(cfg.muzzleOffset, mrot))
-	
-	local collision = world.lineCollision(mpos, firePos)
-	
-	local params = {
-		power = projectile.power() / cfg.projectileCount * (cfg.inheritDamageFactor or 1),
-		powerMultiplier = projectile.powerMultiplier(),
-		damageTeam = world.entityDamageTeam(sourceId)
-	}
-	if cfg.projectileParameters then
-		params = sb.jsonMerge(params, cfg.projectileParameters)
-	end
-	
-	for i = 1, cfg.projectileCount do
-		if cfg.projectileParameters then
-			params.speed = util.randomInRange(cfg.projectileParameters.speed)
-		end
-		local aimVec = vec2.rotate({1,0}, mrot + sb.nrand(cfg.inaccuracy, 0))
-		world.spawnProjectile(cfg.projectileType, collision or firePos, entity.id(), aimVec, false, params)
-	end
-	
-	--muzzleflash
-	local mparams = {periodicActions = cfg.muzzleflashActions}
-	if cfg.muzzleflashVariants and cfg.muzzleflashVariants > 0 then
-		mparams.processing = "."..math.random(1, cfg.muzzleflashVariants)
-	end
-	world.spawnProjectile(cfg.muzzleflash, firePos, sourceId, vec2.rotate({1,0}, mrot), false, mparams)
+  fireProjectile()
+  if self.emptyBounces > 0 and self.ammo <= 0 then
+    self.emptyBounces = self.emptyBounces - 1
+  end
 end
 
-function hit(entityId)
-	--nebulox is gay
-  if entityBounces ~= 0 then
-		local vel = mcontroller.velocity()
-		local epos = world.entityPosition(entityId)
-		local estimatedPosition = vec2.mul(mcontroller.position(), vel)
-		local angle = math.atan(estimatedPosition[2] - epos[2], estimatedPosition[1] - epos[1])
-		
-		local topQuarter = (angle < (3 * math.pi/4)) and (angle > (math.pi/4))
-		local bottomQuarter = (angle < (-math.pi/4)) and (angle > (3 * -math.pi/4))
-		local rightQuarter = (angle < (math.pi/4)) and (angle > (-math.pi/4))
-		local leftQuarter = (angle < (3 * -math.pi/4)) and (angle > (-math.pi)) or (angle < (math.pi)) and (angle > (3 * math.pi/4))
-		
-		if rightQuarter or leftQuarter then
-			mcontroller.setXVelocity(vel[1] * entityBounceFactor)
-		elseif topQuarter or bottomQuarter then
-			mcontroller.setYVelocity(vel[2] * entityBounceFactor)
-		end
-		if entityBounces > 0 then
-      entityBounces = entityBounces - 1
+function shouldDestroy()
+  if projectile.timeToLive() <= 0 then return true end
+
+  if self.ammo <= 0 and self.emptyTimer >= self.emptyTimeToLive and self.emptyBounces <= 0 then
+    local mc = mcontroller
+    if mc.zeroG() or mc.onGround() or mc.isCollisionStuck() or mc.stickingDirection() then
+      return true
     end
   end
+
+  return false
 end
