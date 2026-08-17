@@ -1,7 +1,7 @@
 {
   "itemName": "pat_sniperbow",
   "price": 690,
-  "inventoryIcon": "icon.png",
+  "inventoryIcon": "images/icon.png",
   "maxStack": 1,
   "rarity": "Legendary",
   "tooltipKind": "bow",
@@ -17,7 +17,7 @@
 
   "animation": "sniperbow.animation",
   "animationParts": {
-    "bow": "bow.png",
+    "bow": "images/bow.png",
     "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
   },
   "animationCustom": { },
@@ -26,7 +26,7 @@
 
   "primaryAbilityType": "bowshot",
   "primaryAbility": {
-    "scripts": [ "/pat/sniperbow/sniperbow.lua" ],
+    "scripts": [ "/pat/sniperbow/items/sniperbow.lua" ],
     "class": "SniperBowShot",
 
     "fireOffset": [ 3.0, 0 ],
@@ -45,7 +45,7 @@
 
   "altAbilityType": "bowshot",
   "altAbility": {
-    "scripts": [ "/pat/sniperbow/alt.lua" ],
+    "scripts": [ "/pat/sniperbow/items/alt.lua" ],
     "name": "shoot gun",
     "drawPowerMultiplier": "constant",
     "drawSpeedMultiplier": "drawTimeMultiplier",
