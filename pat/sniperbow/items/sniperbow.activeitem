@@ -16,7 +16,7 @@
   "animation": "sniperbow.animation",
   "animationParts": {
     "bow": "images/bow.png",
-    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+    "muzzleFlash": "/pat/sniperbow/particles/muzzleflash.png"
   },
   "animationCustom": { },
 

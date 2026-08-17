@@ -29,8 +29,9 @@
 			"muzzleFlash": {
 				"properties": {
 					"zLevel": -1,
+					"variants": 6,
 					"centered": true,
-					"offset": [ 4, 0 ],
+					"offset": [ 4.125, 0 ],
 					"fullbright": true,
 					"transformationGroups": [ "weapon" ]
 				},

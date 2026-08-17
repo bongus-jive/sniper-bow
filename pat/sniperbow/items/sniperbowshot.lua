@@ -4,7 +4,8 @@ SniperBowShot = setmetatable({}, { __index = BowShot })
 
 function SniperBowShot:fire()
   if self.doMuzzleflash ~= false then
-    animator.setPartTag("muzzleFlash", "variant", math.random(3))
+    local variants = animator.partProperty("muzzleFlash", "variants") or 1
+    animator.setPartTag("muzzleFlash", "variant", math.random(variants))
     animator.setAnimationState("muzzleFlash", "fire")
     animator.burstParticleEmitter("muzzleFlash")
     animator.playSound("fire")
