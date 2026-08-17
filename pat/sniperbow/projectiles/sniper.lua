@@ -3,6 +3,9 @@ require "/scripts/vec2.lua"
 
 function init()
   local cfg = config.getParameter("thrownGunConfig")
+  
+  local params = config.getParameter("thrownGunParameters")
+  if params then cfg = sb.jsonMerge(cfg, params) end
 
   self.sourceId = projectile.sourceEntity() or entity.id()
 
