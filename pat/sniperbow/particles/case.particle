@@ -1,0 +1,21 @@
+{
+  "kind": "pat_sniperbow_case",
+  "definition": {
+    "type": "textured",
+    "image": "/pat/sniperbow/particles/case.png",
+    "timeToLive": 1.5,
+    "layer": "middle",
+    "rotate": true,
+    "collidesForeground": true,
+    "destructionTime": 0.5,
+    "destructionAction": "shrink",
+    "position": [ -3.25, 0 ],
+    "initialVelocity": [ 5, 12 ],
+    "finalVelocity": [ 0, -100 ],
+    "approach": [ 0, 45 ],
+    "variance": {
+      "angularVelocity": 360,
+      "initialVelocity": [ 8, 4 ]
+    }
+  }
+}
