@@ -29,3 +29,9 @@ function SniperBowShot:currentProjectileParameters()
 
   return params
 end
+
+function SniperBowShot:firePosition()
+  local pos = BowShot.firePosition(self)
+  local coll = world.lineCollision(mcontroller.position(), pos)
+  return coll or pos
+end
