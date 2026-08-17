@@ -1,41 +1,61 @@
 {
-	"projectileName": "pat_sniperbow",
-	"image": "sniper.png",
-	"timeToLive": 15,
-	"orientationLocked": true,
-	"bounces": -1,
-	"piercing": true,
-	"damageKind": "foldingchair",
-	"damagePoly": [ [ 10, 3 ], [ -10, 3 ], [ -10, -3 ], [ 10, -3 ] ],
-	"movementSettings": {
-		"gravityMultiplier": 1.5,
-		"bounceFactor": 0.6,
-		"stopOnFirstBounce": true,
-		"collisionPoly": [ [ -0.375, -0.375 ], [ 0.375, -0.375 ], [ 0.375, 0.375 ], [ -0.375, 0.375 ] ]
-	},
-	"actionOnCollide": [
-		{
-			"action": "sound",
-			"options": [ "/sfx/melee/fist_hit_metal1_quiet.ogg", "/sfx/melee/fist_hit_metal2_quiet.ogg", "/sfx/melee/fist_hit_metal3_quiet.ogg", "/sfx/melee/fist_hit_metal4_quiet.ogg", "/sfx/melee/fist_hit_metal5_quiet.ogg", "/sfx/melee/fist_hit_metal6_quiet.ogg" ]
-		}
-	],
+  "projectileName": "pat_sniperbow",
+  "image": "sniper.png",
+  "timeToLive": 15,
+  "bounces": -1,
+  "piercing": true,
+  "orientationLocked": true,
+  "damageKind": "foldingchair",
+  "damagePoly": [ [ 10, 3 ], [ -10, 3 ], [ -10, -3 ], [ 10, -3 ] ],
+  "movementSettings": {
+    "gravityMultiplier": 1.5,
+    "bounceFactor": 0.6,
+    "stopOnFirstBounce": true,
+    "collisionPoly": [ [ -0.375, -0.375 ], [ 0.375, -0.375 ], [ 0.375, 0.375 ], [ -0.375, 0.375 ] ]
+  },
 
-	"scripts": [ "/pat/sniperbow/projectiles/sniper.lua" ],
-	"thrownGunConfig": {
-		"rotationRate": 5,
-		"rotationDeviation": 2,
+  "actionOnReap": [
+    { "action": "sound", "options": [ "/sfx/melee/fist_kill_wood1.ogg", "/sfx/melee/fist_kill_wood2.ogg" ] },
+    {
+      "action": "loop",
+      "count": 2,
+      "body": [
+        { "action": "particle", "specification": "pat_sniperbow_shardwood", "rotate": true },
+        { "action": "particle", "specification": "pat_sniperbow_shardwood", "rotate": true },
+        { "action": "particle", "specification": "pat_sniperbow_shardblack", "rotate": true },
+        { "action": "particle", "specification": "pat_sniperbow_shardblack", "rotate": true },
+        { "action": "particle", "specification": "pat_sniperbow_shardgold", "rotate": true }
+      ]
+    }
+  ],
 
-		"emptyTimeToLive": 0.5,
-		"emptyBounces": 6,
+  "actionOnCollide": [
+    {
+      "action": "sound",
+      "options": [
+        "/sfx/melee/fist_hit_metal1_quiet.ogg", "/sfx/melee/fist_hit_metal2_quiet.ogg", "/sfx/melee/fist_hit_metal3_quiet.ogg",
+        "/sfx/melee/fist_hit_metal4_quiet.ogg", "/sfx/melee/fist_hit_metal5_quiet.ogg", "/sfx/melee/fist_hit_metal6_quiet.ogg",
+        "/sfx/melee/fist_hit_wood1.ogg", "/sfx/melee/fist_hit_wood2.ogg", "/sfx/melee/fist_hit_wood3.ogg"
+      ]
+    }
+  ],
 
-		"hitBounceFactor": 0.6,
-		"recoil": 40,
+  "scripts": [ "/pat/sniperbow/projectiles/sniper.lua" ],
+  "thrownGunConfig": {
+    "rotationRate": 5,
+    "rotationDeviation": 2,
 
-		"projectileType": "standardbullet",
-		"projectileDamageFactor": 2,
-		"projectileParameters": { "speed": 200 },
+    "emptyTimeToLive": 0.5,
+    "emptyBounces": 6,
 
-		"muzzleOffset": [ 3, 0 ],
-		"muzzleflash": "pat_sniperbow_muzzleflash"
-	}
+    "hitBounceFactor": 0.6,
+    "recoil": 40,
+
+    "projectileType": "standardbullet",
+    "projectileDamageFactor": 2,
+    "projectileParameters": { "speed": 200 },
+
+    "muzzleOffset": [ 3, 0 ],
+    "muzzleflash": "pat_sniperbow_muzzleflash"
+  }
 }
